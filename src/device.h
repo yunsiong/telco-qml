@@ -1,7 +1,7 @@
-#ifndef FRIDAQML_DEVICE_H
-#define FRIDAQML_DEVICE_H
+#ifndef TELCOQML_DEVICE_H
+#define TELCOQML_DEVICE_H
 
-#include "fridafwd.h"
+#include "telcofwd.h"
 #include "iconprovider.h"
 #include "script.h"
 
@@ -28,13 +28,13 @@ public:
     enum class Type { Local, Remote, Usb };
     Q_ENUM(Type)
 
-    explicit Device(FridaDevice *handle, QObject *parent = nullptr);
+    explicit Device(TelcoDevice *handle, QObject *parent = nullptr);
 private:
     void dispose();
 public:
     ~Device();
 
-    FridaDevice *handle() const { return m_handle; }
+    TelcoDevice *handle() const { return m_handle; }
     QString id() const { return m_id; }
     QString name() const { return m_name; }
     QUrl icon() const { return m_icon.url(); }
@@ -50,7 +50,7 @@ Q_SIGNALS:
 
 private:
     ScriptInstance *createScriptInstance(Script *script, int pid);
-    void performSpawn(QString program, FridaSpawnOptions *options, ScriptInstance *wrapper);
+    void performSpawn(QString program, TelcoSpawnOptions *options, ScriptInstance *wrapper);
     static void onSpawnReadyWrapper(GObject *obj, GAsyncResult *res, gpointer data);
     void onSpawnReady(GAsyncResult *res, ScriptInstance *wrapper);
     void performResume(ScriptInstance *wrapper);
@@ -69,7 +69,7 @@ private:
     static gboolean onGarbageCollectTimeoutWrapper(gpointer data);
     void onGarbageCollectTimeout();
 
-    FridaDevice *m_handle;
+    TelcoDevice *m_handle;
     QString m_id;
     QString m_name;
     Icon m_icon;
@@ -111,12 +111,12 @@ Q_SIGNALS:
 private:
     static void onAttachReadyWrapper(GObject *obj, GAsyncResult *res, gpointer data);
     void onAttachReady(GAsyncResult *res);
-    static void onDetachedWrapper(SessionEntry *self, int reason, FridaCrash * crash);
+    static void onDetachedWrapper(SessionEntry *self, int reason, TelcoCrash * crash);
     void onDetached(DetachReason reason);
 
     Device *m_device;
     int m_pid;
-    FridaSession *m_handle;
+    TelcoSession *m_handle;
     QList<ScriptEntry *> m_scripts;
 };
 
@@ -132,7 +132,7 @@ public:
     SessionEntry *session() const { return m_session; }
     ScriptInstance *wrapper() const { return m_wrapper; }
 
-    void updateSessionHandle(FridaSession *sessionHandle);
+    void updateSessionHandle(TelcoSession *sessionHandle);
     void notifySessionError(GError *error);
     void notifySessionError(QString message);
     void load(QString name, Script::Runtime runtime, QByteArray code);
@@ -154,7 +154,7 @@ private:
     void onCreateFromSourceReady(GAsyncResult *res);
     static void onCreateFromBytesReadyWrapper(GObject *obj, GAsyncResult *res, gpointer data);
     void onCreateFromBytesReady(GAsyncResult *res);
-    void onCreateComplete(FridaScript **handle, GError **error);
+    void onCreateComplete(TelcoScript **handle, GError **error);
     static void onLoadReadyWrapper(GObject *obj, GAsyncResult *res, gpointer data);
     void onLoadReady(GAsyncResult *res);
     void performPost(QJsonValue value);
@@ -166,8 +166,8 @@ private:
     QString m_name;
     Script::Runtime m_runtime;
     QByteArray m_code;
-    FridaScript *m_handle;
-    FridaSession *m_sessionHandle;
+    TelcoScript *m_handle;
+    TelcoSession *m_sessionHandle;
     QQueue<QJsonValue> m_pending;
 };
 

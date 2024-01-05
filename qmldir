@@ -1,5 +1,5 @@
-module Frida
-plugin frida-qml
-classname FridaQmlPlugin
+module Telco
+plugin telco-qml
+classname TelcoQmlPlugin
 typeinfo plugins.qmltypes
 designersupported

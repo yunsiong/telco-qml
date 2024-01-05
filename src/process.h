@@ -1,7 +1,7 @@
-#ifndef FRIDAQML_PROCESS_H
-#define FRIDAQML_PROCESS_H
+#ifndef TELCOQML_PROCESS_H
+#define TELCOQML_PROCESS_H
 
-#include "fridafwd.h"
+#include "telcofwd.h"
 #include "iconprovider.h"
 
 #include <QObject>
@@ -18,7 +18,7 @@ class Process : public QObject
     QML_UNCREATABLE("Process objects cannot be instantiated from Qml");
 
 public:
-    explicit Process(FridaProcess *handle, QObject *parent = nullptr);
+    explicit Process(TelcoProcess *handle, QObject *parent = nullptr);
     ~Process();
 
     unsigned int pid() const { return m_pid; }

@@ -1,7 +1,7 @@
-#ifndef FRIDAQML_ICONPROVIDER_H
-#define FRIDAQML_ICONPROVIDER_H
+#ifndef TELCOQML_ICONPROVIDER_H
+#define TELCOQML_ICONPROVIDER_H
 
-#include "fridafwd.h"
+#include "telcofwd.h"
 
 #include <QHash>
 #include <QMutex>

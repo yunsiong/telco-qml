@@ -1,9 +1,9 @@
-#ifndef FRIDAQML_PROCESSLISTMODEL_H
-#define FRIDAQML_PROCESSLISTMODEL_H
+#ifndef TELCOQML_PROCESSLISTMODEL_H
+#define TELCOQML_PROCESSLISTMODEL_H
 
-#include "frida.h"
+#include "telco.h"
 
-#include <frida-core.h>
+#include <telco-core.h>
 #include <QAbstractListModel>
 #include <QQmlEngine>
 
@@ -19,7 +19,7 @@ class ProcessListModel : public QAbstractListModel
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(Device *device READ device WRITE setDevice NOTIFY deviceChanged)
     Q_PROPERTY(bool isLoading READ isLoading NOTIFY isLoadingChanged)
-    Q_PROPERTY(Frida::Scope scope READ scope WRITE setScope NOTIFY scopeChanged)
+    Q_PROPERTY(Telco::Scope scope READ scope WRITE setScope NOTIFY scopeChanged)
     QML_ELEMENT
 
 public:
@@ -36,8 +36,8 @@ public:
     Device *device() const;
     void setDevice(Device *device);
     bool isLoading() const { return m_isLoading; }
-    Frida::Scope scope() const { return m_scope; }
-    void setScope(Frida::Scope scope);
+    Telco::Scope scope() const { return m_scope; }
+    void setScope(Telco::Scope scope);
 
     QHash<int, QByteArray> roleNames() const override;
     int rowCount(const QModelIndex &parent) const override;
@@ -47,15 +47,15 @@ Q_SIGNALS:
     void countChanged(int newCount);
     void deviceChanged(Device *newDevice);
     void isLoadingChanged(bool newIsLoading);
-    void scopeChanged(Frida::Scope newScope);
+    void scopeChanged(Telco::Scope newScope);
     void error(QString message);
 
 private:
     void hardRefresh();
-    void finishHardRefresh(FridaDevice *handle, FridaScope scope);
-    void enumerateProcesses(FridaDevice *handle, FridaScope scope);
+    void finishHardRefresh(TelcoDevice *handle, TelcoScope scope);
+    void enumerateProcesses(TelcoDevice *handle, TelcoScope scope);
     static void onEnumerateReadyWrapper(GObject *obj, GAsyncResult *res, gpointer data);
-    void onEnumerateReady(FridaDevice *handle, GAsyncResult *res);
+    void onEnumerateReady(TelcoDevice *handle, GAsyncResult *res);
 
     static int score(Process *process);
 
@@ -69,7 +69,7 @@ private:
     QPointer<Device> m_device;
     QList<Process *> m_processes;
     bool m_isLoading;
-    Frida::Scope m_scope;
+    Telco::Scope m_scope;
 
     EnumerateProcessesRequest *m_pendingRequest;
     QSet<unsigned int> m_pids;

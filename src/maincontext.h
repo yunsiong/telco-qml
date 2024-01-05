@@ -1,7 +1,7 @@
-#ifndef FRIDAQML_MAINCONTEXT_H
-#define FRIDAQML_MAINCONTEXT_H
+#ifndef TELCOQML_MAINCONTEXT_H
+#define TELCOQML_MAINCONTEXT_H
 
-#include <frida-core.h>
+#include <telco-core.h>
 #include <functional>
 
 class MainContext

@@ -1,7 +1,7 @@
-#ifndef FRIDAQML_FRIDA_H
-#define FRIDAQML_FRIDA_H
+#ifndef TELCOQML_TELCO_H
+#define TELCOQML_TELCO_H
 
-#include "fridafwd.h"
+#include "telcofwd.h"
 
 #include <QMutex>
 #include <QQmlEngine>
@@ -11,10 +11,10 @@ class Device;
 class MainContext;
 class Scripts;
 
-class Frida : public QObject
+class Telco : public QObject
 {
     Q_OBJECT
-    Q_DISABLE_COPY_MOVE(Frida)
+    Q_DISABLE_COPY_MOVE(Telco)
     Q_PROPERTY(Device *localSystem READ localSystem CONSTANT)
     QML_ELEMENT
     QML_SINGLETON
@@ -27,14 +27,14 @@ public:
     };
     Q_ENUM(Scope)
 
-    explicit Frida(QObject *parent = nullptr);
+    explicit Telco(QObject *parent = nullptr);
 private:
     void initialize();
     void dispose();
 public:
-    ~Frida();
+    ~Telco();
 
-    static Frida *instance();
+    static Telco *instance();
 
     Device *localSystem() const { return m_localSystem; }
 
@@ -50,10 +50,10 @@ private:
     void onGetLocalDeviceReady(GAsyncResult *res);
     static void onEnumerateDevicesReadyWrapper(GObject *obj, GAsyncResult *res, gpointer data);
     void onEnumerateDevicesReady(GAsyncResult *res);
-    static void onDeviceAddedWrapper(Frida *self, FridaDevice *deviceHandle);
-    static void onDeviceRemovedWrapper(Frida *self, FridaDevice *deviceHandle);
-    void onDeviceAdded(FridaDevice *deviceHandle);
-    void onDeviceRemoved(FridaDevice *deviceHandle);
+    static void onDeviceAddedWrapper(Telco *self, TelcoDevice *deviceHandle);
+    static void onDeviceRemovedWrapper(Telco *self, TelcoDevice *deviceHandle);
+    void onDeviceAdded(TelcoDevice *deviceHandle);
+    void onDeviceRemoved(TelcoDevice *deviceHandle);
 
 private Q_SLOTS:
     void add(Device *device);
@@ -61,13 +61,13 @@ private Q_SLOTS:
 
 private:
     QMutex m_mutex;
-    FridaDeviceManager *m_handle;
+    TelcoDeviceManager *m_handle;
     QList<Device *> m_deviceItems;
     Device *m_localSystem;
     QWaitCondition m_localSystemAvailable;
     QScopedPointer<MainContext> m_mainContext;
 
-    static Frida *s_instance;
+    static Telco *s_instance;
 };
 
 #endif

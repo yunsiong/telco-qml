@@ -2,7 +2,7 @@ TEMPLATE = lib
 CONFIG += qt no_keywords plugin qmltypes
 QT += quick
 
-QML_IMPORT_NAME = Frida
+QML_IMPORT_NAME = Telco
 QML_IMPORT_MAJOR_VERSION = 1
 
 !isEmpty(_QMAKE_CONF_) {
@@ -10,8 +10,8 @@ QML_IMPORT_MAJOR_VERSION = 1
 } else {
     DESTDIR = $$OUT_PWD/qml/$$QML_IMPORT_NAME
 }
-TARGET = frida-qml
-TARGETPATH = Frida
+TARGET = telco-qml
+TARGETPATH = Telco
 QMAKE_MOC_OPTIONS += -Muri=$$TARGETPATH
 
 SOURCES = \
@@ -20,7 +20,7 @@ SOURCES = \
     src/application.cpp \
     src/process.cpp \
     src/maincontext.cpp \
-    src/frida.cpp \
+    src/telco.cpp \
     src/spawnoptions.cpp \
     src/script.cpp \
     src/devicelistmodel.cpp \
@@ -35,7 +35,7 @@ HEADERS = \
     src/application.h \
     src/process.h \
     src/maincontext.h \
-    src/frida.h \
+    src/telco.h \
     src/spawnoptions.h \
     src/script.h \
     src/devicelistmodel.h \
@@ -51,15 +51,15 @@ OTHER_FILES += $$PLUGINFILES
 
 INCLUDEPATH += $$PWD/src
 
-!isEmpty(FRIDA_CORE_DEVKIT) {
-    INCLUDEPATH += "$${FRIDA_CORE_DEVKIT}"
+!isEmpty(TELCO_CORE_DEVKIT) {
+    INCLUDEPATH += "$${TELCO_CORE_DEVKIT}"
 
     win32 {
-        LIBS_PRIVATE += "$${FRIDA_CORE_DEVKIT}/frida-core.lib"
+        LIBS_PRIVATE += "$${TELCO_CORE_DEVKIT}/telco-core.lib"
         QMAKE_LFLAGS += /IGNORE:4099
     }
     unix {
-        LIBS_PRIVATE += "-L$${FRIDA_CORE_DEVKIT}" -lfrida-core
+        LIBS_PRIVATE += "-L$${TELCO_CORE_DEVKIT}" -ltelco-core
     }
 
     macx {
@@ -71,26 +71,26 @@ INCLUDEPATH += $$PWD/src
 
     install_path = $$[QT_INSTALL_QML]/$$QML_IMPORT_NAME
 } else {
-    FRIDA = $$absolute_path("$$PWD/../")
+    TELCO = $$absolute_path("$$PWD/../")
 
     win32 {
         win32-msvc*:contains(QMAKE_TARGET.arch, x86_64): {
-            FRIDA_HOST = x64-Release
+            TELCO_HOST = x64-Release
         } else {
-            FRIDA_HOST = Win32-Release
+            TELCO_HOST = Win32-Release
         }
     }
     macx {
-        FRIDA_BUILD = macos-x86_64
-        FRIDA_HOST = macos-x86_64
+        TELCO_BUILD = macos-x86_64
+        TELCO_HOST = macos-x86_64
     }
     linux {
-        FRIDA_BUILD = linux-x86_64
-        FRIDA_HOST = linux-x86_64
+        TELCO_BUILD = linux-x86_64
+        TELCO_HOST = linux-x86_64
     }
 
     win32 {
-        FRIDA_SDK_LIBS = \
+        TELCO_SDK_LIBS = \
             libpcre2-8.a \
             libffi.a \
             libz.a \
@@ -109,11 +109,11 @@ INCLUDEPATH += $$PWD/src
             libcapstone.a \
             libquickjs.a
 
-        INCLUDEPATH += "$${FRIDA}/build/sdk-windows/$${FRIDA_HOST}/include/glib-2.0"
-        INCLUDEPATH += "$${FRIDA}/build/sdk-windows/$${FRIDA_HOST}/lib/glib-2.0/include"
-        INCLUDEPATH += "$${FRIDA}/build/sdk-windows/$${FRIDA_HOST}/include/gee-0.8"
-        INCLUDEPATH += "$${FRIDA}/build/sdk-windows/$${FRIDA_HOST}/include/json-glib-1.0"
-        INCLUDEPATH += "$${FRIDA}/build/tmp-windows/$${FRIDA_HOST}/frida-core/api"
+        INCLUDEPATH += "$${TELCO}/build/sdk-windows/$${TELCO_HOST}/include/glib-2.0"
+        INCLUDEPATH += "$${TELCO}/build/sdk-windows/$${TELCO_HOST}/lib/glib-2.0/include"
+        INCLUDEPATH += "$${TELCO}/build/sdk-windows/$${TELCO_HOST}/include/gee-0.8"
+        INCLUDEPATH += "$${TELCO}/build/sdk-windows/$${TELCO_HOST}/include/json-glib-1.0"
+        INCLUDEPATH += "$${TELCO}/build/tmp-windows/$${TELCO_HOST}/telco-core/api"
 
         LIBS_PRIVATE += \
             advapi32.lib \
@@ -129,20 +129,20 @@ INCLUDEPATH += $$PWD/src
             user32.lib \
             winmm.lib \
             ws2_32.lib
-        LIBS_PRIVATE += -L"$${FRIDA}/build/sdk-windows/$${FRIDA_HOST}/lib" $${FRIDA_SDK_LIBS}
-        LIBS_PRIVATE += -L"$${FRIDA}/build/sdk-windows/$${FRIDA_HOST}/lib/gio/modules"
-        LIBS_PRIVATE += -L"$${FRIDA}/build/tmp-windows/$${FRIDA_HOST}/frida-core" frida-core.lib
+        LIBS_PRIVATE += -L"$${TELCO}/build/sdk-windows/$${TELCO_HOST}/lib" $${TELCO_SDK_LIBS}
+        LIBS_PRIVATE += -L"$${TELCO}/build/sdk-windows/$${TELCO_HOST}/lib/gio/modules"
+        LIBS_PRIVATE += -L"$${TELCO}/build/tmp-windows/$${TELCO_HOST}/telco-core" telco-core.lib
     }
 
     unix {
         QT_CONFIG -= no-pkg-config
         CONFIG += link_pkgconfig
-        PKG_CONFIG = PKG_CONFIG_PATH=$${FRIDA}/build/sdk-$${FRIDA_HOST}/lib/pkgconfig:$${FRIDA}/build/frida-$${FRIDA_HOST}/lib/pkgconfig $${FRIDA}/build/toolchain-$${FRIDA_BUILD}/bin/pkg-config --define-variable=frida_sdk_prefix=$${FRIDA}/build/sdk-$${FRIDA_HOST} --static
-        PKGCONFIG += frida-core-1.0
+        PKG_CONFIG = PKG_CONFIG_PATH=$${TELCO}/build/sdk-$${TELCO_HOST}/lib/pkgconfig:$${TELCO}/build/telco-$${TELCO_HOST}/lib/pkgconfig $${TELCO}/build/toolchain-$${TELCO_BUILD}/bin/pkg-config --define-variable=telco_sdk_prefix=$${TELCO}/build/sdk-$${TELCO_HOST} --static
+        PKGCONFIG += telco-core-1.0
     }
 
-    win32:install_path = $${FRIDA}/build/frida-windows/$${FRIDA_HOST}/lib/qt5/qml/$$QML_IMPORT_NAME
-    unix:install_path = $${FRIDA}/build/frida-$${FRIDA_HOST}/lib/qt5/qml/$$QML_IMPORT_NAME
+    win32:install_path = $${TELCO}/build/telco-windows/$${TELCO_HOST}/lib/qt5/qml/$$QML_IMPORT_NAME
+    unix:install_path = $${TELCO}/build/telco-$${TELCO_HOST}/lib/qt5/qml/$$QML_IMPORT_NAME
 }
 
 !static {
@@ -155,7 +155,7 @@ INCLUDEPATH += $$PWD/src
     }
 
     linux {
-        QMAKE_LFLAGS += -Wl,--version-script -Wl,$${PWD}/frida-qml.version -Wl,--gc-sections -Wl,-z,noexecstack
+        QMAKE_LFLAGS += -Wl,--version-script -Wl,$${PWD}/telco-qml.version -Wl,--gc-sections -Wl,-z,noexecstack
     }
 }
 
@@ -174,7 +174,7 @@ INSTALLS += target pluginfiles_install
 COPIES += pluginfiles_copy
 
 static {
-    frida_qml_resources.files = qmldir
-    frida_qml_resources.prefix = /qt-project.org/imports/Frida
-    RESOURCES += frida_qml_resources
+    telco_qml_resources.files = qmldir
+    telco_qml_resources.prefix = /qt-project.org/imports/Telco
+    RESOURCES += telco_qml_resources
 }

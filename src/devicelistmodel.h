@@ -1,5 +1,5 @@
-#ifndef FRIDAQML_DEVICELISTMODEL_H
-#define FRIDAQML_DEVICELISTMODEL_H
+#ifndef TELCOQML_DEVICELISTMODEL_H
+#define TELCOQML_DEVICELISTMODEL_H
 
 #include <QAbstractListModel>
 #include <QQmlEngine>

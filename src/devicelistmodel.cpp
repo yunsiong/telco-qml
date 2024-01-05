@@ -1,9 +1,9 @@
-#include <frida-core.h>
+#include <telco-core.h>
 
 #include "devicelistmodel.h"
 
 #include "device.h"
-#include "frida.h"
+#include "telco.h"
 
 static const int DeviceNameRole = Qt::UserRole + 0;
 static const int DeviceIconRole = Qt::UserRole + 1;
@@ -12,10 +12,10 @@ static const int DeviceTypeRole = Qt::UserRole + 2;
 DeviceListModel::DeviceListModel(QObject *parent) :
     QAbstractListModel(parent)
 {
-    auto frida = Frida::instance();
-    m_devices = frida->deviceItems();
-    connect(frida, &Frida::deviceAdded, this, &DeviceListModel::onDeviceAdded);
-    connect(frida, &Frida::deviceRemoved, this, &DeviceListModel::onDeviceRemoved);
+    auto telco = Telco::instance();
+    m_devices = telco->deviceItems();
+    connect(telco, &Telco::deviceAdded, this, &DeviceListModel::onDeviceAdded);
+    connect(telco, &Telco::deviceRemoved, this, &DeviceListModel::onDeviceRemoved);
 }
 
 Device *DeviceListModel::get(int index) const

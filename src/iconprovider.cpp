@@ -1,4 +1,4 @@
-#include <frida-core.h>
+#include <telco-core.h>
 
 #include "iconprovider.h"
 
@@ -35,7 +35,7 @@ Icon IconProvider::add(QVariantMap serializedIcon)
 
     QUrl url;
     url.setScheme("image");
-    url.setHost("frida");
+    url.setHost("telco");
     url.setPath(QString("/").append(QString::number(id)));
 
     return Icon(id, url);

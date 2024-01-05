@@ -1,25 +1,25 @@
-#include <frida-core.h>
+#include <telco-core.h>
 
 #include "plugin.h"
 
 #include "application.h"
 #include "device.h"
-#include "frida.h"
+#include "telco.h"
 #include "iconprovider.h"
 #include "process.h"
 #include "script.h"
 
 #include <qqml.h>
 
-static QObject *createFridaSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
+static QObject *createTelcoSingleton(QQmlEngine *engine, QJSEngine *scriptEngine)
 {
     Q_UNUSED(engine);
     Q_UNUSED(scriptEngine);
 
-    return Frida::instance();
+    return Telco::instance();
 }
 
-void FridaQmlPlugin::registerTypes(const char *uri)
+void TelcoQmlPlugin::registerTypes(const char *uri)
 {
     qRegisterMetaType<QList<Application *>>("QList<Application *>");
     qRegisterMetaType<QList<Process *>>("QList<Process *>");
@@ -30,15 +30,15 @@ void FridaQmlPlugin::registerTypes(const char *uri)
     qRegisterMetaType<Script::Runtime>("Script::Runtime");
     qRegisterMetaType<ScriptInstance::Status>("ScriptInstance::Status");
 
-    qmlRegisterSingletonType<Frida>(uri, 1, 0, "Frida", createFridaSingleton);
+    qmlRegisterSingletonType<Telco>(uri, 1, 0, "Telco", createTelcoSingleton);
 }
 
-void FridaQmlPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
+void TelcoQmlPlugin::initializeEngine(QQmlEngine *engine, const char *uri)
 {
     Q_UNUSED(uri);
 
-    // Ensure Frida is initialized.
-    Frida::instance();
+    // Ensure Telco is initialized.
+    Telco::instance();
 
-    engine->addImageProvider("frida", IconProvider::instance());
+    engine->addImageProvider("telco", IconProvider::instance());
 }

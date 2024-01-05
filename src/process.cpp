@@ -1,13 +1,13 @@
-#include <frida-core.h>
+#include <telco-core.h>
 
 #include "process.h"
 #include "variant.h"
 
-Process::Process(FridaProcess *handle, QObject *parent) :
+Process::Process(TelcoProcess *handle, QObject *parent) :
     QObject(parent),
-    m_pid(frida_process_get_pid(handle)),
-    m_name(frida_process_get_name(handle)),
-    m_parameters(Frida::parseParametersDict(frida_process_get_parameters(handle)))
+    m_pid(telco_process_get_pid(handle)),
+    m_name(telco_process_get_name(handle)),
+    m_parameters(Telco::parseParametersDict(telco_process_get_parameters(handle)))
 {
     auto iconProvider = IconProvider::instance();
     for (QVariant serializedIcon : m_parameters["icons"].toList())

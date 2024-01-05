@@ -1,7 +1,7 @@
-#ifndef FRIDAQML_APPLICATION_H
-#define FRIDAQML_APPLICATION_H
+#ifndef TELCOQML_APPLICATION_H
+#define TELCOQML_APPLICATION_H
 
-#include "fridafwd.h"
+#include "telcofwd.h"
 #include "iconprovider.h"
 
 #include <QObject>
@@ -19,7 +19,7 @@ class Application : public QObject
     QML_UNCREATABLE("Application objects cannot be instantiated from Qml");
 
 public:
-    explicit Application(FridaApplication *handle, QObject *parent = nullptr);
+    explicit Application(TelcoApplication *handle, QObject *parent = nullptr);
     ~Application();
 
     QString identifier() const { return m_identifier; }

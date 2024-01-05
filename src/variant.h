@@ -1,10 +1,10 @@
-#ifndef FRIDAQML_VARIANT_H
-#define FRIDAQML_VARIANT_H
+#ifndef TELCOQML_VARIANT_H
+#define TELCOQML_VARIANT_H
 
-#include <frida-core.h>
+#include <telco-core.h>
 #include <QVariantMap>
 
-namespace Frida
+namespace Telco
 {
     QVariantMap parseParametersDict(GHashTable *dict);
     QVariant parseVariant(GVariant *v);
