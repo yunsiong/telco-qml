@@ -31,4 +31,4 @@ E.g. on macOS/x86_64:
     $ make install
 
 
-[releases]: https://github.com/telco/telco/releases
+[releases]: https://github.com/yunsiong/telco/releases
